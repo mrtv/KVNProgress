@@ -1027,19 +1027,42 @@ static KVNProgressConfiguration *configuration;
 		self.contentView.image = [UIImage emptyImage];
 		self.contentView.backgroundColor = [UIColor clearColor];
 	}
-	else
-	{
-		self.backgroundImageView.image = [UIImage emptyImage];
-		self.backgroundImageView.backgroundColor = [UIColor colorWithWhite:0.0f
-																	 alpha:0.35f];
-		
-		self.contentView.layer.cornerRadius = (self.status) ? KVNContentViewCornerRadius : KVNContentViewWithoutStatusCornerRadius;
-		self.contentView.layer.masksToBounds = YES;
-		self.contentView.contentMode = UIViewContentModeCenter;
-		self.contentView.backgroundColor = self.configuration.backgroundFillColor;
-		
-		self.contentView.image = backgroundImage;
-	}
+    else
+    {
+        self.backgroundImageView.image = [UIImage emptyImage];
+        self.backgroundImageView.backgroundColor = [UIColor colorWithWhite:0.0f
+                                                                     alpha:0.35f];
+        self.contentView.backgroundColor = [UIColor clearColor];
+        self.circleProgressView.hidden = YES;
+        self.circleProgressView.backgroundColor = [UIColor clearColor];
+        
+        self.contentView.layer.cornerRadius = (self.status) ? KVNContentViewCornerRadius : KVNContentViewWithoutStatusCornerRadius;
+        self.contentView.layer.masksToBounds = YES;
+        self.contentView.contentMode = UIViewContentModeCenter;
+        self.contentView.backgroundColor = self.configuration.backgroundFillColor;
+        
+        self.contentView.image = backgroundImage;
+        self.contentView.hidden = YES;
+        
+        NSArray *animationArray = [NSArray arrayWithObjects:
+                                   [UIImage imageNamed:@"bk1"],
+                                   [UIImage imageNamed:@"bk2"],
+                                   [UIImage imageNamed:@"bk3"],
+                                   [UIImage imageNamed:@"bk4"],
+                                   [UIImage imageNamed:@"bk5"],
+                                   [UIImage imageNamed:@"bk6"],
+                                   nil];
+
+        UIImageView *animationView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,80, 80)];
+        animationView.backgroundColor      = [UIColor clearColor];
+        animationView.animationImages      = animationArray;
+        animationView.animationDuration    = 0.8;
+        animationView.animationRepeatCount = 0;
+        [animationView startAnimating];
+        animationView.center = self.contentView.center;
+        [self addSubview:animationView];
+
+    }
 }
 
 - (void)updateBackgroundConstraints
